@@ -162,3 +162,8 @@ cython_debug/
 
 # Additional Files
 MADS699.code-workspace
+
+# Ignore the data folder, it will be too large for github
+# Use s3 and deepnote to store the data
+# Store s3 credentials in .env file
+data/
