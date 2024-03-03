@@ -10,7 +10,7 @@ Coral bleaching is a phenomenon that has been taking place across all coral reef
 
 ## Overview
 
-This repository/project serves as an intermediate stepping stone building off of the backs of other groups like this article by Madireddy et al titled ["Using machine learning to develop a global coral bleaching predictor"] (https://emerginginvestigators.org/articles/22-056) [1] and providing some insights as to next steps that could be looked into in the world of coral bleaching.
+This repository/project serves as an intermediate stepping stone building off of the backs of other groups like this article by Madireddy et al titled ["Using machine learning to develop a global coral bleaching predictor"](https://emerginginvestigators.org/articles/22-056) [1] and providing some insights as to next steps that could be looked into in the world of coral bleaching.
 
 In doing some prelimiary research for this project, the contributors looked to expand on past findings by answering the following:
 1. How does turbidity affect coral bleaching?
