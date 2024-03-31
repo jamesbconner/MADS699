@@ -21,6 +21,10 @@ In doing some prelimiary research for this project, the contributors looked to e
 ## Quick Start Guide
 
 ## Data
+Global Coral Database: https://springernature.figshare.com/collections/_/5314466
+World Bank’s World Development Indicators (WDI) data: https://databank.worldbank.org/source/world-development-indicators# 
+Paul Allen Coral Atlas https://allencoralatlas.org/atlas
+The National Oceanic and Atmospheric Administration (NOAA): https://coralreefwatch.noaa.gov/product/index.php
 
 ## Technologies
 
