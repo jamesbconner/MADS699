@@ -21,10 +21,11 @@ In doing some prelimiary research for this project, the contributors looked to e
 ## Quick Start Guide
 
 ## Data
+Our dataset was built from the following publicly available datasets:
 Global Coral Database: https://springernature.figshare.com/collections/_/5314466 <br>
 World Bank’s World Development Indicators (WDI) data: https://databank.worldbank.org/source/world-development-indicators# <br>
 The National Oceanic and Atmospheric Administration (NOAA): https://coralreefwatch.noaa.gov/product/index.php <br>
-The Nature Conservancy Marine Ecoregions Of the World (MEOW): https://services.arcgis.com/F7DSX1DSNSiWmOqh/arcgis/rest/services/Marine_Ecoregions_Of_the_World_(MEOW)/FeatureServer
+The Nature Conservancy Marine Ecoregions Of the World (MEOW): https://tnc.maps.arcgis.com/home/item.html?id=ed2be4cf8b7a451f84fd093c2e7660e3#overview
 
 
 ## Technologies
