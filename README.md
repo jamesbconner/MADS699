@@ -21,10 +21,11 @@ In doing some prelimiary research for this project, the contributors looked to e
 ## Quick Start Guide
 
 ## Data
-Global Coral Database: https://springernature.figshare.com/collections/_/5314466
-World Bank’s World Development Indicators (WDI) data: https://databank.worldbank.org/source/world-development-indicators# 
-Paul Allen Coral Atlas https://allencoralatlas.org/atlas
-The National Oceanic and Atmospheric Administration (NOAA): https://coralreefwatch.noaa.gov/product/index.php
+Global Coral Database: https://springernature.figshare.com/collections/_/5314466 <br>
+World Bank’s World Development Indicators (WDI) data: https://databank.worldbank.org/source/world-development-indicators# <br>
+The National Oceanic and Atmospheric Administration (NOAA): https://coralreefwatch.noaa.gov/product/index.php <br>
+The Nature Conservancy Marine Ecoregions Of the World (MEOW): https://services.arcgis.com/F7DSX1DSNSiWmOqh/arcgis/rest/services/Marine_Ecoregions_Of_the_World_(MEOW)/FeatureServer
+
 
 ## Technologies
 
