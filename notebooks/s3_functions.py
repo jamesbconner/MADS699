@@ -89,7 +89,7 @@ def load_from_s3(file_path, access_key_id=None, secret_access_key=None, bucket_n
     return f
 
 
-def write_to_s3(file_path, data, access_key_id=None, secret_access_key=None, bucket_name=None, pickle_file=False):
+def write_to_s3(file_path, data, access_key_id=None, secret_access_key=None, bucket_name=None, pickle_file=False, series_name=False):
     '''
     Upload a file to the S3 bucket location
 
@@ -119,6 +119,12 @@ def write_to_s3(file_path, data, access_key_id=None, secret_access_key=None, buc
     elif isinstance(data, pd.DataFrame):
         with io.BytesIO() as buffer:
             data.to_parquet(buffer)
+            buffer.seek(0)
+            s3_client.put_object(Bucket=bucket_name, Key=file_path, Body=buffer)
+
+    elif isinstance(data, pd.Series):
+        with io.BytesIO() as buffer:
+            data.to_frame(series_name).to_parquet(buffer)
             buffer.seek(0)
             s3_client.put_object(Bucket=bucket_name, Key=file_path, Body=buffer)
 
