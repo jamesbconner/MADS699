@@ -75,8 +75,6 @@ def load_from_s3(file_path, access_key_id=None, secret_access_key=None, bucket_n
     if bucket_name is None:
         bucket_name = globals().get('s3_bucket_name', '')
 
-    print(access_key_id,secret_access_key,bucket_name)
-
     # Initialize a boto3 s3 client with credentials from the .env file
     s3_client = boto3.client('s3', aws_access_key_id=access_key_id, aws_secret_access_key=secret_access_key)
 
