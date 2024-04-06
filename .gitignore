@@ -127,6 +127,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+/private_variables.env
 
 # Spyder project settings
 .spyderproject
@@ -162,9 +163,14 @@ cython_debug/
 
 # Additional Files
 MADS699.code-workspace
-test/
+/test
 
 # Ignore the data folder, it will be too large for github
 # Use s3 and deepnote to store the data
-# Store s3 credentials in .env file
+# Store s3 credentials in variables.env file
 data/
+
+# Ignore the models folder, it will be too large for github
+# Use s3 and deepnote to store the model artifacts
+# Store s3 credentials in variables.env file
+ models/
