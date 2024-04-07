@@ -202,9 +202,11 @@ def model_score(hps, val=True, train=False, holdout=False, Xtt=None, ytt=None, X
     model_type: The type of model to fit and score
     """
 
+    # Identify if there are missing data objects
     if not all(x is not None for x in [Xtt, ytt, Xvt, yvt, Xht, yht]):
         raise ValueError("Data is missing (all parameters for X and y data must be provided)")
 
+    # Create the model object
     if model_type == None:
         raise ValueError("'model_type' argument must be set")
 
@@ -226,7 +228,7 @@ def model_score(hps, val=True, train=False, holdout=False, Xtt=None, ytt=None, X
     else:
         raise ValueError(f"Unknown model_type: {model_type}")
 
-
+    # Fit the model against the training data
     model.fit(Xtt, ytt)
 
     # Evaluate model and print results
@@ -270,3 +272,92 @@ def model_score(hps, val=True, train=False, holdout=False, Xtt=None, ytt=None, X
         print(f"Holdout R^2 Score: {holdout_rsq:.4f}")
 
     return model
+
+
+def feat_ablation(model, hps, Xtt, ytt, Xvt, yvt, Xht, yht, abl_list_to_combo=[]):
+    """
+    Perform feature ablation analysis
+    model: The model object itself
+    Xtt: X_train_trans
+    ytt: y_train_trans
+    Xvt: X_val_trans
+    yvt: y_val_trans
+    Xht: X_holdout_trans
+    yht: y_holdout_trans
+    """
+
+    # Create the base model object with hyperparameters
+    # Note: this model will be refit during the ablation loop
+    abl_model = model_score(hps, Xtt=Xtt, ytt=ytt, Xvt=Xvt, yvt=yvt, Xht=Xht, yht=yht, train=False, val=False,
+                            holdout=False)
+
+    # Evaluation on train data
+    train_pred = abl_model.predict(Xtt)
+    train_pred = np.clip(train_pred, 0, 100)
+    baseline_mae_train = mean_absolute_error(ytt, train_pred)
+
+    # Evaluation on validation data
+    val_pred = abl_model.predict(Xvt)
+    val_pred = np.clip(val_pred, 0, 100)
+    baseline_mae_val = mean_absolute_error(yvt, val_pred)
+
+    print(f"Baseline Mean MAE: {baseline_mae_train:.4f}, Validation MAE: {baseline_mae_val:.4f}")
+
+    # Features for ablation
+    # Start with all features
+    abl_list = [[x] for x in Xtt.columns]
+
+    # Now create combos of features passed in as abl_list_to_combo
+    # Create combos of all items in abl_list_to_combo
+    # Range stars at 2 to skip single columns
+    abl_combo_list = [combo for r in range(2, len(abl_list_to_combo) + 1)
+                      for combo in itertools.combinations(abl_list_to_combo, r)]
+
+    # Itertools combinations() creates tuples.
+    #   Convert each combination from a tuple to a list for ablation
+    abl_combo_list = [list(combo) for combo in abl_combo_list]
+
+    # Add the ablation combos to the ablation list
+    abl_list = abl_list + abl_combo_list
+
+    # Create the ablation loop
+    ablation_results_list = []
+
+    # Feat ablation loop
+    for feature in abl_list:
+        # drop ablated cols
+        modified_X_train_trans = Xtt.drop(columns=feature)
+        modified_X_val_trans = Xvt.drop(columns=feature)
+
+        # Fit the model with ablated features
+        abl_model.fit(modified_X_train_trans, ytt)
+
+        # Evaluation on train data
+        modified_train_predictions = abl_model.predict(modified_X_train_trans)
+        modified_train_predictions = np.clip(modified_train_predictions, 0, 100)
+        modified_mae_train = mean_absolute_error(ytt, modified_train_predictions)
+
+        # Evaluation on validation data
+        modified_val_predictions = abl_model.predict(modified_X_val_trans)
+        modified_val_predictions = np.clip(modified_val_predictions, 0, 100)
+        modified_mae_val = mean_absolute_error(yvt, modified_val_predictions)
+
+        # Calculate MAE changes
+        mae_change_train = baseline_mae_train - modified_mae_train
+        mae_change_val = baseline_mae_val - modified_mae_val
+
+        ablation_result_dict = {
+            'Removed_Feature': ", ".join(feature),
+            'Train_MAE': modified_mae_train,
+            'Train_MAE_Change': mae_change_train,
+            'Train_MAE_Pct_Change': 100 * (1 - (modified_mae_train / baseline_mae_train)),
+            'Val_MAE': modified_mae_val,
+            'Val_MAE_Change': mae_change_val,
+            'Val_MAE_Pct_Change': 100 * (1 - (modified_mae_val / baseline_mae_val))
+        }
+
+        ablation_results_list.append(ablation_result_dict)
+
+    feature_ablation_df = pd.DataFrame(ablation_results_list)
+
+    return feature_ablation_df, baseline_mae_val, baseline_mae_train
