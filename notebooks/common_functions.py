@@ -1,4 +1,8 @@
+# Import Standard Libraries
 import os
+import datetime
+import pickle
+import itertools
 import pandas as pd
 import numpy as np
 
@@ -11,6 +15,18 @@ import xgboost as xgb
 import lightgbm as lgb
 from sklearn.linear_model import ElasticNet
 from sklearn.ensemble import RandomForestRegressor, HistGradientBoostingRegressor
+
+# Import evaluation libraries
+from sklearn.model_selection import KFold, cross_val_score
+from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
+import neptune
+
+# Import Visualization Libraries
+import seaborn as sns
+import matplotlib.pyplot as plt
+import plotly.express as px
+import plotly.graph_objects as go
+import shap
 
 # Determine the environment and get appropriate vars
 deepnote, env_vars = ef.load_env_vars()
@@ -37,6 +53,10 @@ def import_data(dn_path="/work/data/Xy_Data", s3_path="data/Xy_Data", location_n
 
     if location_name == None:
         raise ValueError("'location_name' must be set")
+    elif location_name not in ['GLOB','CARB','SEAA']:
+        raise ValueError("'location_name' must be either GLOB, CARB or SEAA")
+    else:
+        pass
 
     data_path = None
 
@@ -123,7 +143,7 @@ def plot_feat_importance(model):
 
 
 def write_out(model, trials, params, feat_cols=[], dn_path="/work/models", dns_path="/datasets/s3/models",
-              s3_path="/models", model_family="xgboost_reg", location_name=None):
+              s3_path="models", model_family=None, location_name=None):
     """
     Write out the model artifacts to disk
 
@@ -136,12 +156,23 @@ def write_out(model, trials, params, feat_cols=[], dn_path="/work/models", dns_p
     """
 
     if location_name == None:
-        raise ValueError("'location_name' argument must be set")
+        raise ValueError("'location_name' must be set")
+    elif location_name not in ['GLOB','CARB','SEAA']:
+        raise ValueError("'location_name' must be either GLOB, CARB or SEAA")
+    else:
+        pass
+
+    if model_family == None:
+        raise ValueError("'model_family' must be set")
+    elif model_family not in ['elasticnet_reg', 'histgradboost_reg', 'lightgbm_reg', 'randomforest_reg', 'xgboost_reg']:
+        raise ValueError("'model_family' must be either elasticnet_reg, histgradboost_reg, lightgbm_reg, randomforest_reg, or xgboost_reg")
+    else:
+        pass
 
     date_time_str = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     dn_model_path = os.path.join(dn_path, model_family, location_name)
     dns_model_path = os.path.join(dns_path, model_family, location_name)
-    s3_model_path = os.path.join(s3_path, model_family, location_name)
+    #s3_model_path = os.path.join(s3_path, model_family, location_name)
 
     if deepnote:
         # make sure the path exists
@@ -174,17 +205,17 @@ def write_out(model, trials, params, feat_cols=[], dn_path="/work/models", dns_p
                 pickle.dump(feat_cols, f)
     else:
         # Write out the HyperOpt Trials object
-        write_to_s3(file_path=f"{s3_model_path}/{date_time_str}_trials.pkl", data=trials, pickle_file=True, **aws_env_vars)
+        sf.write_to_s3(file_path=f"{s3_path}/{model_family}/{location_name}/{date_time_str}_trials.pkl", data=trials, pickle_file=True, **aws_env_vars)
 
         # Write out the XGBoost Model Object
-        write_to_s3(file_path=f"{s3_model_path}/{date_time_str}_model.pkl", data=model, pickle_file=True, **aws_env_vars)
+        sf.write_to_s3(file_path=f"{s3_path}/{model_family}/{location_name}/{date_time_str}_model.pkl", data=model, pickle_file=True, **aws_env_vars)
 
         # Write out the XGBoost Best Params
-        write_to_s3(file_path=f"{s3_model_path}/{date_time_str}_params.pkl", data=params, pickle_file=True, **aws_env_vars)
+        sf.write_to_s3(file_path=f"{s3_path}/{model_family}/{location_name}/{date_time_str}_params.pkl", data=params, pickle_file=True, **aws_env_vars)
 
         # Write out the feature columns if they exist
         if len(feat_cols) > 0:
-            write_to_s3(file_path=f"{s3_model_path}/{date_time_str}_feat_cols.pkl", data=feat_cols, pickle_file=True, **aws_env_vars)
+            sf.write_to_s3(file_path=f"{s3_path}/{model_family}/{location_name}/{date_time_str}_feat_cols.pkl", data=feat_cols, pickle_file=True, **aws_env_vars)
 
 
 def model_score(hps, val=True, train=False, holdout=False, Xtt=None, ytt=None, Xvt=None, yvt=None, Xht=None, yht=None, model_type=None):
@@ -274,7 +305,7 @@ def model_score(hps, val=True, train=False, holdout=False, Xtt=None, ytt=None, X
     return model
 
 
-def feat_ablation(model, hps, Xtt, ytt, Xvt, yvt, Xht, yht, abl_list_to_combo=[]):
+def feat_ablation(model, hps, Xtt, ytt, Xvt, yvt, Xht, yht, abl_list_to_combo=[], model_type=None):
     """
     Perform feature ablation analysis
     model: The model object itself
@@ -289,7 +320,7 @@ def feat_ablation(model, hps, Xtt, ytt, Xvt, yvt, Xht, yht, abl_list_to_combo=[]
     # Create the base model object with hyperparameters
     # Note: this model will be refit during the ablation loop
     abl_model = model_score(hps, Xtt=Xtt, ytt=ytt, Xvt=Xvt, yvt=yvt, Xht=Xht, yht=yht, train=False, val=False,
-                            holdout=False)
+                            holdout=False, model_type=model_type)
 
     # Evaluation on train data
     train_pred = abl_model.predict(Xtt)
