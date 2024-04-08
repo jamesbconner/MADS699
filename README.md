@@ -8,14 +8,6 @@
 
 Coral bleaching is a phenomenon that has been taking place across all coral reefs spread out over the world. Healthy coral contains a symbiotic algae; the coral provides a home for the algae and the algae provides food for the coral via photosynthesis. As things like climate change, tourism, and pollution alter this relationship the algae separates from the coral and this results in coral bleaching. Coral bleaching can be easily detected as the coral turns from its normal colors to a stark white color.
 
-This repository/project serves as an intermediate stepping stone building off of the backs of other groups like this article by Madireddy et al titled ["Using machine learning to develop a global coral bleaching predictor"](https://emerginginvestigators.org/articles/22-056) [1] and providing some insights as to next steps that could be looked into in the world of coral bleaching.
-
-In doing some preliminary research for this project, the contributors looked to expand on past findings by answering the following:
-1. How does turbidity affect coral bleaching?
-2. How does fertilizer runoff affect coral bleaching?
-3. Can we predict coral bleaching events based on weather patterns/trends?
-4. Can we identify which sites are most at risk to coral bleaching?
-
 # Quick Start Guide
 
 ## Running the Report in DeepNote (Easiest Way to Access Project)
@@ -39,21 +31,26 @@ You will need to generate:
 With these credentials you need to copy the file called "variables.env" and paste these 6 values as they appear in that docuemnt with your newly generated information, save that file in the same location as "variables.env", and rename it to be "private_variables.env". Note that "private_variables.env" is already ignored in the git ignore so you should not have to worry about pushing your personal keys to this project if you choose to contribute.
 
 ### MapBox
-Information to Generate: MAPBOX_TOKEN
+Information to Generate: MAPBOX_TOKEN <br>
 [Mapbox](https://www.mapbox.com/)
 
 Click on the link above and either sign-up or log-in. Click "Create a Token" about half way down the page. Name your token and leave all of the defaults as they are. After you generate your token you should see it in the token list. Copy the token and set it as the variable "MAPBOX_TOKEN" in your "private_variables.env" file.
 
 ### Neptune AI
-Information to Generate: NEPTUNE_PROJECT, NEPTUNE_API_TOKEN
+Information to Generate: NEPTUNE_PROJECT, NEPTUNE_API_TOKEN <br>
 [Neptune AI](https://neptune.ai/)
 
-Clionk on the link above and either sign-up or log-in. Click "+ Create Project" in the upper right hand corner and give your neptune space a name. The vaiable "NEPTUNE_PROJECT" will be in the form "Workspace/Project" where the workspace is shown in the upper left and the project is the name you just assigned. Set "NEPTUNE_PROJECT" in your "private_variables.env" file to take your unique name in the form "Workspace/Project".
+Click on the link above and either sign-up or log-in. Click "+ Create Project" in the upper right hand corner and give your neptune space a name. The vaiable "NEPTUNE_PROJECT" will be in the form "Workspace/Project" where the workspace is shown in the upper left and the project is the name you just assigned. Set "NEPTUNE_PROJECT" in your "private_variables.env" file to take your unique name in the form "Workspace/Project".
 
 Now you will need to click on your username in the bottom left of the Neptune homepage. Click "Get your API Token" and generate a token. Copy that token into the "private_variables.env" file, assigning the variable "NEPTUNE_API_TOKEN" your newly generated token.
 
 ### Amazon Web Services S3 Storage
+Information to Generate: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, S3_BUCKET_NAME <br>
 [AWS Amazon](https://aws.amazon.com/)
+
+Click on the "Create an AWS Account" in the upper right if you need to make a new account or simply sign-in. From the dashboard, there should be a service within "Storage" called "S3". Click on that link and in the next page click on the yellow "Create Bucket" button. Fill in a bucket name and copy that information into the "private_variables.env" assigning it to the variable "S3_BUCKET_NAME".
+
+From the AWS dashboard, click on your username in the upper right. From there click on "Security Credentials". Scroll down to the tab called "Access Keys" and click on the "Create Access Key". After generating this key, copy the code under "Access Key" and assign it to the variable "AWS_ACCESS_KEY_ID" in "private_variables.env". Also copy the "Secret Access Key" and assign it to the variable "AWS_SECRET_ACCESS_KEY" in "private_variables.env".
 
 ## Setup Runtime Environment
 
@@ -63,8 +60,6 @@ Now you will need to click on your username in the bottom left of the Neptune ho
 
 ### Jupyter Notebook
 
-
-
 # Data
 Our dataset was built from the following publicly available datasets:
 
@@ -72,22 +67,3 @@ Our dataset was built from the following publicly available datasets:
 [World Bank’s World Development Indicators (WDI) data](https://databank.worldbank.org/source/world-development-indicators#)<br>
 [The National Oceanic and Atmospheric Administration (NOAA)](https://coralreefwatch.noaa.gov/product/index.php)<br>
 [The Nature Conservancy Marine Ecoregions Of the World (MEOW)](https://tnc.maps.arcgis.com/home/item.html?id=ed2be4cf8b7a451f84fd093c2e7660e3#overview)<br>
-
-
-# Technologies
-
-## Modeling
-ElasticNet, RandomForest, HistGradientBoosting, XGBoost, LightGBM, Kmeans
-
-## Experimentation
-Neptune AI, HyperOpt, HalvingGridSearchCV GridSearchCV
-
-## Evaluation & Visualization
-Plotly, Matplotlib, Seaborn, Pearson Correlation, SHAP, Mean Absolute Error, Mean Squared Error, R2 Score
-
-## Code
-DeepNote, VSCode, PyCharm
-
-# Citations
-
-[1] JEI. “Using Machine Learning to Develop a Global Coral Bleaching Predictor | Journal of Emerging Investigators.” Emerginginvestigators.org, emerginginvestigators.org/articles/22-056. Accessed 3 Mar. 2024.
