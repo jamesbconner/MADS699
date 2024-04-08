@@ -28,14 +28,13 @@ In doing some preliminary research for this project, the contributors looked to 
 ### Neptune AI
 [Neptune AI](https://neptune.ai/)
 
-
 ### MapBox
 [Mapbox](https://www.mapbox.com/)
 
 ### Amazon Web Services S3 Storage
 [AWS Amazon](https://aws.amazon.com/)
 
-## Setup Runtime Environement
+## Setup Runtime Environment
 
 ### Dotenv
 
@@ -57,10 +56,13 @@ Our dataset was built from the following publicly available datasets:
 # Technologies
 
 ## Modeling
-ElasticNet, RandomForest, HistGradientBoosting, XGBoost, LightGBM
+ElasticNet, RandomForest, HistGradientBoosting, XGBoost, LightGBM, Kmeans
 
 ## Experimentation
 Neptune AI, HyperOpt, HalvingGridSearchCV GridSearchCV
+
+## Evaluation & Visualization
+Plotly, Matplotlib, Seaborn, Pearson Correlation, SHAP, Mean Absolute Error, Mean Squared Error, R2 Score
 
 ## Code
 DeepNote, VSCode, PyCharm
