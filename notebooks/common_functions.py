@@ -266,6 +266,7 @@ def model_score(hps, val=True, train=False, holdout=False, Xtt=None, ytt=None, X
     if train:
         # Evaluation on train data
         train_pred = model.predict(Xtt)
+        train_pred = np.clip(train_pred, 0, 100)
         train_mae = mean_absolute_error(ytt, train_pred)
         train_mse = mean_squared_error(ytt, train_pred)
         train_rmse = mean_squared_error(ytt, train_pred, squared=False)
@@ -279,6 +280,7 @@ def model_score(hps, val=True, train=False, holdout=False, Xtt=None, ytt=None, X
     if val:
         # Evaluation on validation data
         val_pred = model.predict(Xvt)
+        val_pred = np.clip(val_pred, 0, 100)
         val_mae = mean_absolute_error(yvt, val_pred)
         val_mse = mean_squared_error(yvt, val_pred)
         val_rmse = mean_squared_error(yvt, val_pred, squared=False)
@@ -292,6 +294,7 @@ def model_score(hps, val=True, train=False, holdout=False, Xtt=None, ytt=None, X
     if holdout:
         # Evaluation on holdout data
         holdout_pred = model.predict(Xht)
+        holdout_pred = np.clip(holdout_pred, 0, 100)
         holdout_mae = mean_absolute_error(yht, holdout_pred)
         holdout_mse = mean_squared_error(yht, holdout_pred)
         holdout_rmse = mean_squared_error(yht, holdout_pred, squared=False)
