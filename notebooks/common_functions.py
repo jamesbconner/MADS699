@@ -242,16 +242,16 @@ def model_score(hps, val=True, train=False, holdout=False, Xtt=None, ytt=None, X
         raise ValueError("'model_type' argument must be set")
 
     elif model_type == 'xgb':
-        model = xgb.XGBRegressor(**hps)
+        model = xgb.XGBRegressor(**hps, random_state=42)
 
     elif model_type == 'lgbm':
         model = lgb.LGBMRegressor(**hps, verbose=-1, random_state=42, n_jobs=-1)
 
     elif model_type == 'hgbm':
-        model = HistGradientBoostingRegressor(**hps)
+        model = HistGradientBoostingRegressor(**hps, random_state=42)
 
     elif model_type == 'rf':
-        model = RandomForestRegressor(**hps)
+        model = RandomForestRegressor(**hps, random_state=42)
 
     elif model_type == 'enet':
         model = ElasticNet(**hps, random_state=42)
