@@ -56,7 +56,7 @@ From the AWS dashboard, click on your username in the upper right. From there cl
 
 ### **Python**
 
-It is recommended that you generate a virtual environment before download the required libraries for this project!
+It is recommended that you generate a virtual environment before installing the required libraries for this project!
 
 ```
 pip install -r requirements.txt
