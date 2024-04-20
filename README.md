@@ -12,7 +12,7 @@ Coral bleaching is a phenomenon that has been taking place across all coral reef
 
 ## DeepNote Setup Guide (Easiest Way to Access Project)
 
-Click the link below to see our final report in Deepnote! After clicking on the link, sign-up or log-in to Deepnote with your credentials. The Deepnote environment already has all of the neccessary libraries imported and allows for the reader to interactively run code while reading markdown.
+Click the link below to see our final report in Deepnote! After clicking on the link click "Run" in the upper right. This process may take a moment, but all subsequent updates to the notebook will be much faster going forward. The Deepnote environment already has all of the neccessary libraries imported and allows for the reader to interactively run code while reading markdown.
 
 [DeepNote App Link](https://deepnote.com/app/capstone-dcc8/Capstone-6a5ab9c4-f125-4a61-a0b4-af0fc5325c87)
 
