@@ -66,7 +66,7 @@ pip install -r requirements.txt
 The notebooks are meant to be run in numerical order starting with "00_Data_Cleansing.ipynb". If all of your variables in "private_variables.env" are set correctly you should be able to uncomment code as you see fit and perform hyperparameter tuning whereever you please. It should be noted that hyperparameter tuning may take a very long time depending on the model choice, region, and features so please be warned!
 
 # Data
-Our dataset was built from the following publicly available datasets:
+Our dataset was built from the following publicly available datasets: <br>
 GCBD, WDI, and NOAA are covered by the Creative Commons Attribution 4.0 license, while MEOW is public for non-commercial use with attribution
 
 [Global Coral Bleaching Database](https://springernature.figshare.com/collections/_/5314466)<br>
