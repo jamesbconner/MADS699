@@ -18,3 +18,4 @@ statsmodels
 lightgbm
 python-dotenv
 boto3
+nbformat
