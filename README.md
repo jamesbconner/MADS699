@@ -74,5 +74,5 @@ GCBD, WDI, and NOAA are covered by the Creative Commons Attribution 4.0 license,
 [The National Oceanic and Atmospheric Administration (NOAA)](https://coralreefwatch.noaa.gov/product/index.php)<br>
 [The Nature Conservancy Marine Ecoregions Of the World (MEOW)](https://tnc.maps.arcgis.com/home/item.html?id=ed2be4cf8b7a451f84fd093c2e7660e3#overview)<br>
 
-All of our Model and Data files are available here: [Google Drive](https://drive.google.com/drive/folders/1bWVJOmdM-2KzVt_ijil47Y2TLAkwu9Nz?usp=drive_link) <br>
+All of our processed data and final model files are available here: [Google Drive](https://drive.google.com/drive/folders/1bWVJOmdM-2KzVt_ijil47Y2TLAkwu9Nz?usp=drive_link) <br>
 _Note that this link is only limited to University of Michigan accounts._
