@@ -128,6 +128,7 @@ ENV/
 env.bak/
 venv.bak/
 /private_variables.env
+/variables.env
 
 # Spyder project settings
 .spyderproject
